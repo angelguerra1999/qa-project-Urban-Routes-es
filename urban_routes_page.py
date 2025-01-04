@@ -15,7 +15,7 @@ class UrbanRoutesPage:
     payment_method = (By.CLASS_NAME, "pp-button")
     add_card = (By.XPATH, '//*[contains(text(), "Agregar tarjeta")]')
     card_added = (By.CLASS_NAME, 'pp-row')
-    card_number_field = (By.NAME,'number')
+    card_number_field = (By.NAME, 'number')
     card_code_field = (By.NAME, 'code')
     add_button = (By.XPATH, '//button[text()="Agregar"]')
     card_close_button = (By.CSS_SELECTOR, '.payment-picker.open .modal .section.active .close-button')
@@ -23,7 +23,7 @@ class UrbanRoutesPage:
     blanket_and_scarves_switch = (By.CLASS_NAME, "switch")
     add_icecream = (By.CLASS_NAME, "counter-plus")
     order_a_taxi = (By.CLASS_NAME, "smart-button-wrapper")
-    modal_opcional = (By.XPATH,'//*[contains(text(), "El conductor llegará en")]')
+    modal_opcional = (By.XPATH, '//*[contains(text(), "El conductor llegará en")]')
     switch_checkbox = (By.CLASS_NAME, "switch-input")
     icecream_counter = (By.CLASS_NAME, "counter-value")
 
@@ -49,7 +49,6 @@ class UrbanRoutesPage:
     def click_comfort_tariff_button(self):
         tariff = self.driver.find_elements(*self.comfort_tariff_button)
         tariff[4].click()
-
 
     def click_phone_number_field(self):
         self.driver.find_element(*self.telephone_number).click()
@@ -82,8 +81,8 @@ class UrbanRoutesPage:
         self.driver.find_element(*self.card_code_field).send_keys(Keys.TAB)
 
     def click_add_button(self):
-        add = self.driver.find_element(*self.add_button).click()
-        print(add)
+        self.driver.find_element(*self.add_button).click()
+
     def click_card_close_button(self):
         self.driver.find_element(*self.card_close_button).click()
 
@@ -101,3 +100,8 @@ class UrbanRoutesPage:
 
     def wait_opcional_modal(self):
         self.driver.find_element(*self.modal_opcional)
+
+    def setup_route(self, from_address, to_address):
+        self.set_from(from_address)
+        self.set_to(to_address)
+        self.click_order_taxi_button()
