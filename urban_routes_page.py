@@ -3,8 +3,28 @@ from selenium.webdriver import Keys
 import data
 
 class UrbanRoutesPage:
-    # Selectores...
     
+    from_field = (By.ID, 'from_field_id')  
+    to_field = (By.ID, 'to_field_id')
+    order_taxi_button = (By.ID, 'order_taxi_button_id')
+    comfort_tariff_button = (By.CLASS_NAME, 'comfort_tariff_button_class')
+    telephone_number = (By.ID, 'telephone_number_id')
+    phone_input = (By.ID, 'phone_input_id')
+    next_button = (By.ID, 'next_button_id')
+    code_field = (By.ID, 'code_field_id')
+    code_confirmation_button = (By.ID, 'code_confirmation_button_id')
+    payment_method = (By.ID, 'payment_method_id')
+    add_card = (By.ID, 'add_card_id')
+    card_number_field = (By.ID, 'card_number_field_id')
+    card_code_field = (By.ID, 'card_code_field_id')
+    add_button = (By.ID, 'add_button_id')
+    card_close_button = (By.ID, 'card_close_button_id')
+    message = (By.ID, 'message_id')
+    blanket_and_scarves_switch = (By.ID, 'blanket_and_scarves_switch_id')
+    add_icecream = (By.ID, 'add_icecream_id')
+    order_a_taxi = (By.ID, 'order_a_taxi_id')
+    modal_opcional = (By.ID, 'modal_opcional_id')
+
     def __init__(self, driver):
         self.driver = driver
 
