@@ -1,13 +1,16 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import data
 
 class UrbanRoutesPage:
     
-    from_field = (By.ID, 'from_field_id')  
-    to_field = (By.ID, 'to_field_id')
-    order_taxi_button = (By.ID, 'order_taxi_button_id')
-    comfort_tariff_button = (By.CLASS_NAME, 'comfort_tariff_button_class')
+    # Definición de selectores de elementos
+    from_field = (By.ID, 'from_field_id')
+    to_field = (By.XPATH, '//input[@id="to_field_id"]')
+    order_taxi_button = (By.CLASS_NAME, 'order_taxi_button_class')
+    comfort_tariff_button = (By.CSS_SELECTOR, '.comfort_tariff_button_class')
     telephone_number = (By.ID, 'telephone_number_id')
     phone_input = (By.ID, 'phone_input_id')
     next_button = (By.ID, 'next_button_id')
@@ -20,7 +23,7 @@ class UrbanRoutesPage:
     add_button = (By.ID, 'add_button_id')
     card_close_button = (By.ID, 'card_close_button_id')
     message = (By.ID, 'message_id')
-    blanket_and_scarves_switch = (By.ID, 'blanket_and_scarves_switch_id')
+    blanket_and_scarves_switch = (By.XPATH, '//input[@id="blanket_and_scarves_switch_id"]')
     add_icecream = (By.ID, 'add_icecream_id')
     order_a_taxi = (By.ID, 'order_a_taxi_id')
     modal_opcional = (By.ID, 'modal_opcional_id')
@@ -36,7 +39,15 @@ class UrbanRoutesPage:
         self.driver.find_element(*self.to_field).send_keys(to_address)
 
     def click_order_taxi_button(self):
-        self.driver.find_element(*self.order_taxi_button).click()
+        # Esperar a que el contenedor esté presente
+        WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'order_taxi_button_class'))
+        )
+        # Esperar a que el botón sea clickeable y luego hacer clic
+        taxi_click = WebDriverWait(self.driver, 5).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, 'order_taxi_button_class'))
+        )
+        taxi_click.click()
 
     def click_comfort_tariff_button(self):
         tariff = self.driver.find_elements(*self.comfort_tariff_button)
@@ -91,8 +102,8 @@ class UrbanRoutesPage:
         self.driver.find_element(*self.order_a_taxi).click()
     
     def wait_opcional_modal(self):
-        self.driver.find_element(*self.modal_opcional)
-    
+        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.modal_opcional))
+
     def setup_route(self):
         self.set_from(data.address_from)
         self.set_to(data.address_to)
