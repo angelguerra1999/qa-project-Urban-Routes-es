@@ -18,13 +18,22 @@ class TestUrbanRoutes:
         cls.driver.implicitly_wait(10)
         cls.driver.get(data.urban_routes_url)
         cls.routes_page = urban_routes_page.UrbanRoutesPage(cls.driver)
-
         # Configurar la ruta inicial una sola vez
         cls.routes_page.setup_route()
 
     def test_set_route(self):
-        assert self.routes_page.get_from() == data.address_from
-        assert self.routes_page.get_to() == data.address_to
+        # Navegar a la URL requerida
+        self.driver.get(data.urban_routes_url)
+        
+        # Instanciar la página de rutas urbanas
+        self.routes_page = urban_routes_page.UrbanRoutesPage(self.driver)
+        
+        # Configurar las rutas con los datos de prueba
+        self.routes_page.setup_route(data.address_from, data.address_to)
+        
+        # Verificar que las rutas se configuraron correctamente
+        assert self.routes_page.get_from() == data.address_from, "La dirección de origen no coincide."
+        assert self.routes_page.get_to() == data.address_to, "La dirección de destino no coincide."
 
     def test_select_comfort_tariff(self):
         self.routes_page.click_comfort_tariff_button()
